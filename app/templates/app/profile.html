@@ -1,0 +1,100 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block main-content %}
+
+<div class="mt-6 mb-24">
+    <div class="flex max-w-2xl mx-auto  my-4 justify-end gap-3">
+        <div class="">
+            <a href="{% url 'profile-setting' %}" class="flex gap-1.5 mr-4 justify-end"><img width="24" height="24" src="https://img.icons8.com/material-outlined/48/add.png" alt="create-new"/>เพิ่มที่อยู่</a>
+        </div>
+        <div class="">
+            <a href="{% url 'password-change' %}" class="flex gap-1.5 mr-4 justify-end"><img width="24" height="24" src="https://img.icons8.com/material-outlined/48/password.png" alt="create-new"/>รีเซ็ตรหัสผ่าน</a>
+        </div>
+    </div>
+    {% if customer %}
+    {% for cu in customer %}
+    <div class="่bg-white max-w-2xl mx-auto shadow overflow-hidden sm:rounded-lg mb-6">
+            
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                สวัสดี {{ request.user }} !
+            </h3>
+            <p class="mt-1 max-w-2xl text-md text-gray-500">
+                ที่อยู่ {{ forloop.counter }}
+            </p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        ชื่อ
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ cu.name }}
+                    </dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Locality
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ cu.locality }}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        เมือง
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ cu.city }}
+                    </dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        เบอร์โทรศัพท์
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ cu.mobile }}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        รัฐ
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ cu.state }}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        รหัสไปรษณีย์
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ cu.zipcode }}
+                    </dd>
+                </div>
+            </dl>
+        </div>
+        <div class="flex justify-center gap-4 mb-4">
+            <button class="my-2 p-2 px-4 text-white rounded main-button"><a href="{% url 'update-profile' pk=cu.id %}">แก้ไข</a></button>
+            <button class="my-2 p-2 px-4 text-white rounded bg-red-600 hover:bg-red-800"><a href="{% url 'delete_address' pk=cu.id %}">ลบ</a></button>
+        </div>
+        <hr class="h-px bg-gray-300 border-0">
+
+         
+       
+    </div>
+    {% endfor %}    
+
+    {% else %}
+    <p class="text-center my-12">ไปยังหน้า 'เพิ่มที่อยู่' เพื่อตั้งค่าที่อยู่ของคุณ</p>
+    {% endif %}
+
+</div>
+  
+{% endblock main-content %}
