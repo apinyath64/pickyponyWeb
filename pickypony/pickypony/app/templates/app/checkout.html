@@ -1,0 +1,220 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+  Checkout
+{% endblock title %}
+
+
+{% block main-content %}
+<section class="bg-white py-12 mb-12 antialiased dark:bg-gray-900">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="text-sm mx-24 px-4 p-4 mb-6 rounded {% if msg == 'success' %} bg-green-50 border border-green-600 text-green-600 {% else %} bg-red-50 border border-red-600 text-red-600 {% endif %} " role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+  
+        <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
+            <form method="post" id="checkoutForm" class="flex">
+            {% csrf_token %}
+                <div class="min-w-0 flex-1 space-y-8">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">สรุปการสั่งซื้อ</h3>
+                        {% for i in cart %}
+                            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                                <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
+                                <a href="#" class="shrink-0 md:order-1">
+                                    <img class="h-20 w-20 dark:hidden" src="{{ i.item.image.url }}" alt="item image" />
+                                </a>
+                                
+                                <label for="counter-input" class="sr-only">Quantity:</label>
+                                <div class="flex items-center justify-between md:order-3 md:justify-end">
+                                    <div class="flex items-center gap-2">
+                                        <span id="quantity" class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0">x{{ i.quantity }}</span>
+                                    </div>
+                                    <div class="text-end md:order-4 md:w-32">
+                                    <p class="text-base font-bold text-gray-900 dark:text-white">฿{{ i.item.discounted_price }}</p>
+                                    </div>
+                                </div>
+                    
+                                <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
+                                    <a href="#" class="text-base font-medium text-gray-900 hover:underline dark:text-white">{{ i.item.name }}</a>
+                                    <div class="flex gap-2">
+                                        <p class="text-sm text-gray-600">สี: {{ i.color }}</p>
+                                        <p class="text-sm text-gray-600">ไซส์: {{ i.size }}</p>
+                                    </div>
+                                    
+                                </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+            
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">การชำระเงิน</h3>
+            
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                        <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+                            <div class="flex items-start">
+                            <div class="flex h-5 items-center">
+                                <input id="credit-card" aria-describedby="credit-card-text" type="radio" name="payment-method" value="" class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" checked />
+                            </div>
+            
+                            <div class="ms-4 text-sm">
+                                <label for="credit-card" class="font-medium leading-none text-gray-900 dark:text-white"> Credit Card </label>
+                                <p id="credit-card-text" class="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Pay with your credit card</p>
+                            </div>
+                            </div>
+            
+                        </div>
+
+                        </div>
+                    </div>
+            
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">การจัดส่งสินค้า</h3>
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                            <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+                                <div class="flex items-start">
+                                <div class="flex h-5 items-center">
+                                    <input id="dhl" aria-describedby="dhl-text" type="radio" name="delivery-method" value="" class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" checked />
+                                </div>
+                
+                                <div class="ms-4 text-sm">
+                                    <label for="dhl" class="font-medium leading-none text-gray-900 dark:text-white"> ฿40 - Kerry Express </label>
+                                    <p id="dhl-text" class="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400">Get it by Tommorow</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">รายละเอียดการจัดส่ง</h2>
+                            {% for add in address %}
+                            <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 mb-6">
+                                
+                                <div class="mt-2 mb-5">
+                                    <input type="radio" class="h-4 w-4 border-gray-300 bg-white text-gray-600 focus:ring-2 focus:ring-gray-300" name="customer_id" id="customer_add{{ forloop.counter }}" value="{{ add.id }}">
+                                    <label for="customer_add{{ forloop.counter }}">ที่อยู่: {{ forloop.counter }}</label>
+                                </div>    
+                                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                
+                                    <div>
+                                        <label class="mb-2 block text-sm font-medium text-gray-900 "> ชื่อ </label>
+                                        <input type="text" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" value="{{ add.name }}" readonly />
+                                    </div>
+                        
+                                    <div>
+                                        <label for="your_email" class="mb-2 block text-sm font-medium text-gray-900"> อีเมล </label>
+                                        <input type="email" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" value="{{ add.user.email }}" readonly />
+                                    </div>
+                                    <div>
+                                        <label for="locality" class="mb-2 block text-sm font-medium text-gray-900"> Locality </label>
+                                        <input type="text" id="locality" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" value="{{ add.locality }}" readonly />
+                                    </div>
+                                    <div>
+                                        <div class="mb-2 flex items-center gap-2">
+                                            <label for="select-city-input-3" class="block text-sm font-medium text-gray-900 dark:text-white"> เมือง </label>
+                                        </div>
+                                        <input type="text" id="locality" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" value="{{ add.city }}" readonly />
+                                    </div>
+                                    <div>
+                                        <label for="state" class="mb-2 block text-sm font-medium text-gray-900"> รัฐ </label>
+                                        <input type="text" id="locality" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" value="{{ add.state }}" readonly />
+                                    </div>
+        
+                                    <div>
+                                        <label for="your_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> เบอร์โทรศัพท์ </label>
+                                        <input type="text" id="your_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" value="{{ add.mobile }}" readonly />
+                                    </div>
+                                    <div>
+                                        <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> รหัสไปรษณีย์ </label>
+                                        <input type="text" id="zipcode" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" value="{{ add.zipcode }}" readonly />
+                                    </div>
+        
+                                </div>
+
+                            </div>
+                            {% endfor%}
+
+                        <div class="sm:col-span-2">
+                            <a href="{% url 'profile-setting' %}" class="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
+                                <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
+                                </svg>
+                                เพิ่มที่อยู่ใหม่
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-6 w-full space-y-6 sm:mt-8 ml-12 lg:mt-0 lg:max-w-xs xl:max-w-md">
+                    <div class="flow-root">
+                        <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
+                        <dl class="flex items-center justify-between gap-4 py-3">
+                            <dt class="text-base font-normal text-gray-500 dark:text-gray-400">ราคา</dt>
+                            <dd class="text-base font-medium text-gray-900 dark:text-white">฿{{ amount }}</dd>
+                        </dl>
+            
+                        <dl class="flex items-center justify-between gap-4 py-3">
+                            <dt class="text-base font-normal text-gray-500 dark:text-gray-400">ประหยัดถึง</dt>
+                            <dd class="text-base font-medium text-green-500">-฿{{ total_saving }}</dd>
+                        </dl>
+            
+                        <dl class="flex items-center justify-between gap-4 py-3">
+                            <dt class="text-base font-normal text-gray-500 dark:text-gray-400">การจัดส่ง</dt>
+                            <dd class="text-base font-medium text-gray-900 dark:text-white">฿40</dd>
+                        </dl>
+            
+                        <dl class="flex items-center justify-between gap-4 py-3">
+                            <dt class="text-base font-bold text-gray-900 dark:text-white">ราคาที่ต้องจ่าย</dt>
+                            <dd class="text-base font-bold text-gray-900 dark:text-white" type="text">฿<input name="total_amount" type="text" value="{{ total_amount }}"></dd>
+                        </dl>
+                        </div>
+                    </div>
+        
+                    <div class="space-y-3 mt-4">
+                        <input type="hidden" name="omiseToken" />
+                        <button type="submit" id="omise-button" class="flex w-full items-center justify-center rounded-lg px-5 py-2.5 text-md font-bold text-white focus:outline-none focus:ring-4  focus:ring-primary-300 main-button">Continue</button>
+                       
+                    </div>
+                
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock main-content %}
+
+{% block payment-gateway %}
+<script>
+    OmiseCard.configure({
+      publicKey: "{{ OMISE_PUBLIC_KEY }}"
+    });
+  
+    var button = document.querySelector("#omise-button");
+    var form = document.querySelector("#checkoutForm");
+  
+    button.addEventListener("click", (event) => {
+        event.preventDefault();
+        OmiseCard.open({
+            amount: {{omiseamount}},
+            currency: "THB",
+            frameLabel: "Picky Pony",
+            defaultPaymentMethod: "credit_card",
+            onCreateTokenSuccess: (nonce) => {
+                document.querySelector("input[name='omiseToken']").value = nonce;
+                form.submit();
+                console.log("Payment successfully!")
+            },
+            onFailure: (message) => {
+                alert("Payment failed: " + message);
+            }
+        });
+    });
+  </script>
+{% endblock payment-gateway %}
