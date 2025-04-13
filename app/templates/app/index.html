@@ -4,16 +4,16 @@
 
 {% block carousel %}
 <div id="controls-carousel" class="relative w-full" data-carousel="static">
-  <div class="relative h-56 overflow-hidden md:h-96">
-      <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <img src="{% static 'images/carousel_img/c1.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+  <div class="slideshow-container relative h-56 overflow-hidden md:h-96">
+      <div class="img-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out" data-carousel-item>
+        <img src="{% static 'images/carousel_img/c1.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
       </div>
-      <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-          <img src="{% static 'images/carousel_img/c2.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+      <div class="img-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out" data-carousel-item>
+        <img src="{% static 'images/carousel_img/c2.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
       </div>
-      <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <img src="{% static 'images/carousel_img/c3.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-      </div>
+      <div class="img-slide absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out" data-carousel-item>
+        <img src="{% static 'images/carousel_img/c3.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+    </div>
   </div>
 
   <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>

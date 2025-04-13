@@ -6,10 +6,10 @@ from .models import Customer
 
 class RegistrationForm(UserCreationForm):
     
-    username = forms.CharField(label="ชื่อผู้ใช้", widget=forms.TextInput(attrs={"class": "w-full bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
-    email = forms.EmailField(label="อีเมล", widget=forms.EmailInput(attrs={"class": "w-full bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
-    password1 = forms.CharField(label="รหัสผ่าน", widget=forms.PasswordInput(attrs={"class": "w-full bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
-    password2 = forms.CharField(label="ยืนยันรหัสผ่าน", widget=forms.PasswordInput(attrs={"class": "w-full bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
+    username = forms.CharField(label="ชื่อผู้ใช้", widget=forms.TextInput(attrs={"class": "w-full bg-gray-100 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
+    email = forms.EmailField(label="อีเมล", widget=forms.EmailInput(attrs={"class": "w-full bg-gray-100 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
+    password1 = forms.CharField(label="รหัสผ่าน", widget=forms.PasswordInput(attrs={"class": "w-full bg-gray-100 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
+    password2 = forms.CharField(label="ยืนยันรหัสผ่าน", widget=forms.PasswordInput(attrs={"class": "w-full bg-gray-100 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block appearance-none"}))
 
     class Meta:
         model = User

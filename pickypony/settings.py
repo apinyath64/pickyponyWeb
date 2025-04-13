@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -132,7 +133,13 @@ LOGIN_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' 
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = 'apinya9152@gmail.com'
+EMAIL_HOST_USER = 'apinya9152@gmail.com'
+EMAIL_HOST_PASSWORD = 'cavtdgtqwneivphn'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 OMISE_PUBLIC_KEY = "pkey_test_632m4mbefncrq6mcdx8"
 OMISE_SECRET_KEY = "skey_test_632m4qb34m9g7s8h28w"

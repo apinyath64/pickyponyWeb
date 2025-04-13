@@ -16,8 +16,7 @@ from django.utils.decorators import method_decorator
 @login_required
 def index(request):
     item = Item.objects.all()
-    user = User.objects.get(username=request.user)
-    
+    user = User.objects.get(username=request.user)  
     total_item = 0
     total_wishlist = 0
     wishlist = []
@@ -28,6 +27,23 @@ def index(request):
 
     return render(request, "app/index.html", locals())
 
+
+def index_api(request):
+    if  request.user.is_authenticated:
+        user = request.user
+        item = list(Item.objects.values())
+        total_item = Cart.objects.filter(user=user).count()
+        total_wishlist = Wishlist.objects.filter(user=user).count()
+        wishlist = list(Wishlist.objects.filter(user=user).values_list('item_id', flat=True))
+        return JsonResponse({
+            'item': item,
+            'total_item': total_item,
+            'total_wishlist': total_wishlist,
+            'wishlist': wishlist
+        }, safe=False)
+    else:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+    
 
 class RegistrationView(View):
     def get(self, request):

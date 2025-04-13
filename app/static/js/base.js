@@ -1,67 +1,82 @@
 // Profile dropdrown
-document.addEventListener("DOMContentLoaded", function () {
-    const userMenuButton = document.getElementById("user-menu-button");
-    const userDropdown = document.getElementById("user-dropdown")
+function openProfile() {
+  document.getElementById("user-profile-dropdown").classList.toggle("hidden");
+}
 
-    userMenuButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        userDropdown.classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", function (event) {
-        if (!userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) {
-            userDropdown.classList.add("hidden");
-        }
-    });
+document.addEventListener("mousedown", function(event) {
+  const profileBtn = document.querySelector('.profile-btn');
+  const dropdown = document.getElementById("user-profile-dropdown");
+  if (!profileBtn.contains(event.target)) {
+    dropdown.classList.add("hidden");
+  }
 });
-
 
 // Shop dropdown
-document.addEventListener("DOMContentLoaded", function () {
-    const shopDropdownButton = document.getElementById("dropdownNavbarLink");
-    const shopDropdownMenu = document.getElementById("dropdownNavbar");
+function openShop() {
+  document.getElementById("dropdownNavbar").classList.toggle("hidden")
+}
+document.addEventListener("mousedown", function(event) {
+  const shopBtn = document.querySelector('button[onclick="openShop()"]');
+  const dropdown = document.getElementById("dropdownNavbar");
+  if (!shopBtn.contains(event.target) && !dropdown.contains(event.target)) {
+    dropdown.classList.add("hidden");
+  }
+});
 
-    shopDropdownButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        shopDropdownMenu.classList.toggle("hidden");
-    });
-    document.addEventListener("click", function (event) {
-        if (!shopDropdownButton.contains(event.target) && !shopDropdownMenu.contains(event.target)) {
-            shopDropdownMenu.classList.add("hidden");
-        }
-    })
-})
+
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("img-slide");
+
+  for (i = 0; i < slides.length; i++) {
+    slides[i].classList.remove("opacity-100");
+    slides[i].classList.add("opacity-0");
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+
+  slides[slideIndex-1].classList.remove("opacity-0");
+  slides[slideIndex-1].classList.add("opacity-100");
+  setTimeout(showSlides, 3000);
+}
+
+
 
 // carousel slide
-document.addEventListener("DOMContentLoaded", function() {
-  const items = document.querySelectorAll('[data-carousel-item]');
-  let currentIndex = 0;
+// document.addEventListener("DOMContentLoaded", function() {
+//   const items = document.querySelectorAll('[data-carousel-item]');
+//   let currentIndex = 0;
 
-  function showImg(index) {
-    items.forEach((item, i) => {
-      item.classList.add('hidden');
-      if (i == index) {
-        item.classList.remove('hidden');
-      }
-    });
-  }
+//   function showImg(index) {
+//     items.forEach((item, i) => {
+//       item.classList.add('hidden');
+//       if (i == index) {
+//         item.classList.remove('hidden');
+//       }
+//     });
+//   }
 
-  function nextImg() {
-    currentIndex = (currentIndex + 1) % items.length;
-    showImg(currentIndex);
-  }
+//   function nextImg() {
+//     currentIndex = (currentIndex + 1) % items.length;
+//     showImg(currentIndex);
+//   }
 
-  function prevImg() {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
-    showImg(currentIndex);
-  }
+//   function prevImg() {
+//     currentIndex = (currentIndex - 1 + items.length) % items.length;
+//     showImg(currentIndex);
+//   }
 
-  document.querySelector('[data-carousel-next]').addEventListener('click', nextImg);
-  document.querySelector('[data-carousel-prev]').addEventListener('click', prevImg);
+//   document.querySelector('[data-carousel-next]').addEventListener('click', nextImg);
+//   document.querySelector('[data-carousel-prev]').addEventListener('click', prevImg);
 
-  showImg(currentIndex);
+//   showImg(currentIndex);
 
-});
+// });
 
 
 // เพิ่ม ลบ สินค้า
