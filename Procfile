@@ -1,3 +1,3 @@
-web: gunicorn pickypony.wsgi --log-file-
+web: gunicorn pickypony.wsgi:application
 
 web: python manage.py migrate && gunicorn pickypony.wsgi
