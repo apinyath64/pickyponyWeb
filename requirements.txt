@@ -8,7 +8,7 @@ idna==3.10
 omise==0.15.0
 packaging==24.2
 pillow==11.2.1
-psycopg==3.2.6
+psycopg2-binary==2.9.9
 requests==2.32.3
 setuptools==78.1.0
 sqlparse==0.5.3
