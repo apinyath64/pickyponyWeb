@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url 
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,15 +79,20 @@ WSGI_APPLICATION = 'pickypony.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pickypony',
-        'USER': 'postgres',
-        'PASSWORD': 'apinya230745',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
+    'default': dj_database_url.config(
+        default='postgres://postgres:apinya230745@localhost:5432/pickypony'
+    )
 }
+    
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'pickypony',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'apinya230745',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432'
+    # }
+
 
 
 # Password validation
